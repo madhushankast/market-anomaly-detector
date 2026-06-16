@@ -1,46 +1,62 @@
-# Python bytecode & cache
+# Python / VSCode / PyCharm / Jupyter
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+# C extensions
 *.so
-.pytest_cache/
-.coverage
-htmlcov/
-.mypy_cache/
-.ipynb_checkpoints/
+
+# Distribution / packaging
+*.egg
 *.egg-info/
 dist/
 build/
+*.manifest
+*.spec
 
-# Virtual environments
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environments
+.env
 .venv/
 venv/
 ENV/
 env/
 
-# Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-*.env
-
-# IDEs and Editors
-.vscode/
+# PyCharm
 .idea/
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.swp
+*.iml
 
-# OS files
+# VS Code
+.vscode/
+
+# macOS
 .DS_Store
-Thumbs.db
-desktop.ini
 
-# Logs & temp files
-*.log
-tmp/
-temp/
+# Data directories (exclude raw and processed data)
+ml/data/raw/
+ml/data/processed/
+ml/data/notebooks/
+
+# Logs
+logs/
