@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import LiveSignals from './components/LiveSignals';
 
 function App() {
   const [allTicks, setAllTicks] = useState([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState('');
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState('dashboard');
 
   useEffect(() => {
     const fetchTicks = async () => {
@@ -81,7 +83,7 @@ function App() {
           <p className="subtitle">Real-time anomalous tracking and performance monitors</p>
         </div>
 
-        {!loading && (
+        {!loading && activeTab === 'dashboard' && (
           <div className="selector-wrapper">
             <select 
               id="stock-select" 
@@ -99,7 +101,25 @@ function App() {
         )}
       </header>
 
-      {loading ? (
+      {/* Tab Switch Navigation */}
+      <div className="tabs-navigation">
+        <button 
+          onClick={() => setActiveTab('dashboard')} 
+          className={`tab-btn ${activeTab === 'dashboard' ? 'active' : ''}`}
+        >
+          📈 Real-Time Ticks
+        </button>
+        <button 
+          onClick={() => setActiveTab('predictions')} 
+          className={`tab-btn ${activeTab === 'predictions' ? 'active' : ''}`}
+        >
+          🔮 ML Signals Matrix
+        </button>
+      </div>
+
+      {activeTab === 'predictions' ? (
+        <LiveSignals />
+      ) : loading ? (
         <div className="loading-state">
           <div className="spinner"></div>
           <span>Parsing structural records...</span>

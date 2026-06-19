@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from sqlalchemy import desc
 from app.db.session import SessionLocal
 from app.db.models import MarketTick
+from app.services.prediction import PredictionService
 
 router = APIRouter()
 
@@ -37,3 +38,19 @@ def latest_ticks(limit: int = 20):
         ]
     finally:
         db.close()
+
+
+@router.get("/signals/live")
+def get_live_signals(refresh: bool = False):
+    """
+    Get live trading signals based on the latest available market state.
+    """
+    return PredictionService.get_live_signals(force_refresh=refresh)
+
+
+@router.post("/signals/run")
+def run_prediction():
+    """
+    Manually run inference and refresh the signal cache.
+    """
+    return PredictionService.run_prediction()

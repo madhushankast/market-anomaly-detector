@@ -6,11 +6,13 @@ TARGET_COMPANIES = ['JKH', 'CCS', 'COMB', 'CONN', 'LLUB', 'LIOC']
 
 def fetch_cse_data():
     try:
-        # Based on user description, endpoints are POST with form-urlencoded
-        # We will use todaySharePrice as it seems to provide daily details.
         url = "https://www.cse.lk/api/tradeSummary"
-        # If it needs payload, typically empty or specific params. Assuming empty for all securities.
-        response = requests.post(url, data={})
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Referer": "https://www.cse.lk/",
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        response = requests.post(url, data={}, headers=headers, timeout=10)
         
         # If API gives JSON response, we parse it
         if response.status_code == 200:
@@ -62,7 +64,7 @@ def run_ingestion_loop():
                     "trading_date": str(item.get("lastTradedTime", "")),
                     "price_high": safe_float(item.get("high", 0)),
                     "price_low": safe_float(item.get("low", 0)),
-                    "close_price": safe_float(item.get("closingPrice", 0)),
+                    "close_price": safe_float(item.get("price", 0)),
                     "open_price": safe_float(item.get("open", 0)),
                     "trade_volume": safe_int(item.get("tradevolume", 0)),
                     "share_volume": safe_int(item.get("sharevolume", 0)),
